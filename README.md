@@ -60,10 +60,26 @@ A maioria das rotas é protegida por JWT. Para acessar:
    - **Username**: admin
    - **Password**: admin123
 2. Utilize o token retornado no header `Authorization` como `Bearer <token>`.
+3. Chama do método para obter o login :
+```   
+ curl --location 'http://localhost:8080/api/auth/login' \
+   --header 'Content-Type: application/json' \
+   --data '{
+   "username": "admin",
+   "password": "admin123"
+   }'
+```
 
 ## Testes
 
 Para executar os testes unitários e de integração:
 ```bash
-mvn test
+  mvn test
+```
+## Criação das migrations
+
+Para criar uma nova migration para atualizar/criar/excluir objetos no banco de dados, acesse o terminal e execute :
+
+```
+  .\create_migration.sh "descricao_migration"
 ```
