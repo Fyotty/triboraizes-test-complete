@@ -35,7 +35,8 @@ public class ProductService {
     }
 
     public void deleteProduct(UUID id) {
-        repository.deleteById(id);
+        Product product = findByUuid(id);
+        repository.delete(product);
     }
 
     public List<ProductDTO> getAllProducts() {
@@ -43,7 +44,7 @@ public class ProductService {
     }
 
     private Product findByUuid(UUID id) {
-        return repository.findById(id)
+        return repository.findByUuid(id)
                 .orElseThrow(() -> new RuntimeException("Produto não enontrado"));
     }
 
