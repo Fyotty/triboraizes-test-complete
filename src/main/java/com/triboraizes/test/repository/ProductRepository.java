@@ -1,6 +1,6 @@
 package com.triboraizes.test.repository;
 
-import com.triboraizes.test.model.Product;
+import com.triboraizes.test.domain.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

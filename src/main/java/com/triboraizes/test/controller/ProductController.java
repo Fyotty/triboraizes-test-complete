@@ -1,6 +1,7 @@
 package com.triboraizes.test.controller;
 
-import com.triboraizes.test.dto.ProductDTO;
+import com.triboraizes.test.domain.dto.ProductDTO;
+import com.triboraizes.test.domain.form.ProductForm;
 import com.triboraizes.test.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -30,14 +31,14 @@ public class ProductController {
 
     @PostMapping
     @Operation(summary = "Cria um novo produto")
-    public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO dto) {
-        return ResponseEntity.ok(productService.createProduct(dto));
+    public ResponseEntity<ProductDTO> create(@RequestBody ProductForm form) {
+        return ResponseEntity.ok(productService.createProduct(form));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza um produto existente")
-    public ResponseEntity<ProductDTO> update(@PathVariable UUID id, @RequestBody ProductDTO dto) {
-        return ResponseEntity.ok(productService.updateProduct(id, dto));
+    public ResponseEntity<ProductDTO> update(@PathVariable UUID id, @RequestBody ProductForm form) {
+        return ResponseEntity.ok(productService.updateProduct(id, form));
     }
 
     @DeleteMapping("/{id}")

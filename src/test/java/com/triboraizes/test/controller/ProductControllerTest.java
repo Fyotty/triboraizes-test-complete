@@ -1,19 +1,16 @@
 package com.triboraizes.test.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.triboraizes.test.dto.ProductDTO;
+import com.triboraizes.test.domain.dto.ProductDTO;
+import com.triboraizes.test.domain.form.ProductForm;
 import com.triboraizes.test.security.JwtUtils;
 import com.triboraizes.test.service.ProductService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -64,7 +61,7 @@ public class ProductControllerTest {
                 .quantity(5)
                 .build();
 
-        when(productService.createProduct(any(ProductDTO.class))).thenReturn(dto);
+        when(productService.createProduct(any(ProductForm.class))).thenReturn(dto);
 
         mockMvc.perform(post("/api/products")
                 .contentType(MediaType.APPLICATION_JSON)

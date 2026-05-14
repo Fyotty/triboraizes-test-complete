@@ -1,40 +1,35 @@
 package com.triboraizes.test.service;
 
-import com.triboraizes.test.dto.ProductDTO;
-import com.triboraizes.test.model.Product;
+import com.triboraizes.test.domain.dto.ProductDTO;
+import com.triboraizes.test.domain.entity.Product;
+import com.triboraizes.test.domain.form.ProductForm;
+import com.triboraizes.test.domain.mapper.ProductMapper;
 import com.triboraizes.test.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository repository;
+    private final ProductMapper mapper;
 
-    public ProductDTO createProduct(ProductDTO dto) {
-        Product product = Product.builder()
-                .uuid(UUID.randomUUID())
-                .active(true)
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .price(dto.getPrice())
-                .quantity(dto.getQuantity())
-                .build();
+    public ProductDTO createProduct(ProductForm form) {
+        Product product = mapper.toModel(form);
         Product saved = repository.save(product);
         return mapToDTO(saved);
     }
 
-    public ProductDTO updateProduct(UUID id, ProductDTO dto) {
-        Product product = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        product.setName(dto.getName());
-        product.setDescription(dto.getDescription());
-        product.setPrice(dto.getPrice());
-        product.setQuantity(dto.getQuantity());
+    public ProductDTO updateProduct(UUID id, ProductForm form) {
+        Product product = findByUuid(id);
+
+        product.setName(form.name());
+        product.setDescription(form.description());
+        product.setPrice(form.price());
+        product.setQuantity(form.quantity());
         Product updated = repository.save(product);
         return mapToDTO(updated);
     }
@@ -44,24 +39,20 @@ public class ProductService {
     }
 
     public List<ProductDTO> getAllProducts() {
-        return repository.findAll().stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+        return mapper.toDto(repository.findAll());
+    }
+
+    private Product findByUuid(UUID id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não enontrado"));
     }
 
     public ProductDTO getProductById(UUID id) {
-        Product product = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+        Product product = findByUuid(id);
         return mapToDTO(product);
     }
 
     private ProductDTO mapToDTO(Product product) {
-        return ProductDTO.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .description(product.getDescription())
-                .price(product.getPrice())
-                .quantity(product.getQuantity())
-                .build();
+        return mapper.toDto(product);
     }
 }

@@ -1,4 +1,4 @@
-package com.triboraizes.test.dto;
+package com.triboraizes.test.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
