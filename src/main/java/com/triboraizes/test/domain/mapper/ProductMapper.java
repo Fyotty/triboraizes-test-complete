@@ -13,7 +13,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
-@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 @AllArgsConstructor
 public class ProductMapper implements EntityMapper<ProductDTO, Product, ProductForm>  {
 

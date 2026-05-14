@@ -6,6 +6,7 @@ import com.triboraizes.test.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,13 +32,13 @@ public class ProductController {
 
     @PostMapping
     @Operation(summary = "Cria um novo produto")
-    public ResponseEntity<ProductDTO> create(@RequestBody ProductForm form) {
+    public ResponseEntity<ProductDTO> create(@Valid @RequestBody ProductForm form) {
         return ResponseEntity.ok(productService.createProduct(form));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza um produto existente")
-    public ResponseEntity<ProductDTO> update(@PathVariable UUID id, @RequestBody ProductForm form) {
+    public ResponseEntity<ProductDTO> update(@PathVariable UUID id, @Valid @RequestBody ProductForm form) {
         return ResponseEntity.ok(productService.updateProduct(id, form));
     }
 
