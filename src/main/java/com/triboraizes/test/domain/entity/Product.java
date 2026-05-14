@@ -1,4 +1,4 @@
-package com.triboraizes.test.model;
+package com.triboraizes.test.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
